@@ -1,0 +1,51 @@
+sources:
+  loan:
+    kind: mysql
+    host: ${MYSQL_HOST}
+    port: ${MYSQL_PORT}
+    database: bank
+    user: ${MYSQL_USER}
+    password: ${MYSQL_PASSWORD}
+
+tools:
+  get-outstanding-balance:
+    kind: mysql-sql
+    source: loan
+    description: Get the outstanding balance for a specifically named loan (e.g. 'auto' or 'personal').
+    parameters:
+      - name: loan_type
+        type: string
+        description: The type or name of the loan (e.g. auto, personal).
+    statement: SELECT loan_type, CAST(outstanding_balance AS DOUBLE) AS outstanding_balance FROM loans WHERE LOWER(loan_type) = LOWER(?) AND customer_id = 1;
+
+  get-loan-details:
+    kind: mysql-sql
+    source: loan
+    description: Get loan terms and details including origination date, amount, outstanding balance, terms, monthly payment, and next payment date.
+    parameters:
+      - name: loan_type
+        type: string
+        description: The type of loan (e.g. auto, personal).
+    statement: SELECT loan_type, origination_date, CAST(amount AS DOUBLE) AS amount, CAST(outstanding_balance AS DOUBLE) AS outstanding_balance, terms, CAST(monthly_payment AS DOUBLE) AS monthly_payment, next_payment_date FROM loans WHERE LOWER(loan_type) = LOWER(?) AND customer_id = 1;
+
+  get-next-payment-date:
+    kind: mysql-sql
+    source: loan
+    description: Get the next loan payment date and monthly payment amount for a loan.
+    parameters:
+      - name: loan_type
+        type: string
+        description: The type of loan (e.g. auto, personal).
+    statement: SELECT loan_type, CAST(monthly_payment AS DOUBLE) AS monthly_payment, next_payment_date FROM loans WHERE LOWER(loan_type) = LOWER(?) AND customer_id = 1;
+
+  get-all-loans:
+    kind: mysql-sql
+    source: loan
+    description: List all existing loans, balances, terms, and payment dates for the customer.
+    statement: SELECT loan_type, CAST(amount AS DOUBLE) AS amount, CAST(outstanding_balance AS DOUBLE) AS outstanding_balance, terms, CAST(monthly_payment AS DOUBLE) AS monthly_payment, next_payment_date FROM loans WHERE customer_id = 1;
+
+  get-total-outstanding-balance:
+    kind: mysql-sql
+    source: loan
+    description: Get the total sum of all outstanding balances across all loans for the customer.
+    statement: SELECT CAST(COALESCE(SUM(outstanding_balance), 0) AS DOUBLE) AS total_outstanding_balance FROM loans WHERE customer_id = 1;
