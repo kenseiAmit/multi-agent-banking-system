@@ -1,0 +1,45 @@
+sources:
+  deposit:
+    kind: mysql
+    host: ${MYSQL_HOST}
+    port: ${MYSQL_PORT}
+    database: bank
+    user: ${MYSQL_USER}
+    password: ${MYSQL_PASSWORD}
+
+tools:
+  list-accounts:
+    kind: mysql-sql
+    source: deposit
+    description: List all deposit accounts for the customer.
+    statement: SELECT account_type FROM accounts WHERE customer_id = 1;
+
+  get-balance:
+    kind: mysql-sql
+    source: deposit
+    description: Get the current balance for a specifically named deposit account (e.g., 'vacation' or 'primary').
+    parameters:
+      - name: account_type
+        type: string
+        description: The name or type of the deposit account (e.g. vacation or primary).
+    statement: SELECT CAST(balance AS DOUBLE) AS balance FROM accounts WHERE LOWER(account_type) = LOWER(?) AND customer_id = 1;
+
+  get-transactions:
+    kind: mysql-sql
+    source: deposit
+    description: Get recent transactions for a specifically named deposit account.
+    parameters:
+      - name: account_type
+        type: string
+        description: The name or type of the deposit account (e.g. vacation or primary).
+    statement: SELECT t.transaction_date, CAST(t.amount AS DOUBLE) AS amount, t.description FROM transactions t JOIN accounts a ON t.account_id = a.id WHERE LOWER(a.account_type) = LOWER(?) AND a.customer_id = 1 ORDER BY t.transaction_date DESC LIMIT 5;
+
+  check-minimum-balance:
+    kind: mysql-sql
+    source: deposit
+    description: Check if the sum of all deposit account balances is greater than a specified minimum amount. Returns true or false.
+    parameters:
+      - name: minimum_balance
+        type: float
+        description: The minimum balance threshold to compare total deposits against.
+    statement: SELECT IF(COALESCE(SUM(balance), 0) > ?, true, false) AS meets_minimum FROM accounts WHERE customer_id = 1;
