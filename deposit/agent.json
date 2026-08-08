@@ -1,0 +1,23 @@
+{
+  "name": "deposit",
+  "description": "Deposit Account Agent providing balances, recent transactions, and equity qualification checks for Example National Bank.",
+  "url": "http://localhost:8000/a2a/deposit",
+  "defaultInputModes": ["text/plain"],
+  "defaultOutputModes": ["text/plain"],
+  "capabilities": {
+    "streaming": false,
+    "functions": true
+  },
+  "skills": [
+    {
+      "id": "deposit_inquiry",
+      "name": "Deposit Account Inquiries",
+      "description": "Handles deposit account inquiries, individual account balances, and recent transaction history."
+    },
+    {
+      "id": "equity_verification",
+      "name": "Minimum Balance Verification",
+      "description": "Verifies whether total customer deposits exceed a minimum required balance threshold."
+    }
+  ]
+}
