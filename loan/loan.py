@@ -189,3 +189,118 @@ def verify_deposit_equity(minimum_balance: float) -> bool:
     except Exception:
         pass
 
+    # Direct database check fallback via Toolbox
+    if db_client:
+        try:
+            check_tool = db_client.load_tool("check-minimum-balance")
+            res = check_tool(minimum_balance=float(minimum_balance))
+            return parse_deposit_equity_response(res)
+        except Exception as e:
+            logger.error(f"Error checking minimum balance: {e}")
+    return False
+
+# Pydantic Schemas for State Management
+class LoanRequestOutput(BaseModel):
+    loan_type: str = Field(description="The type of loan requested, e.g., 'auto', 'personal', 'home', 'recreational vehicle'.")
+    amount: float = Field(description="The numeric amount requested for the loan.")
+
+class OutstandingBalanceOutput(BaseModel):
+    outstanding_balance: float = Field(description="Total current outstanding loan balance across all customer loans.")
+
+class PolicyOutput(BaseModel):
+    debt_to_equity_ratio: float = Field(description="The required debt-to-equity ratio according to the loan policy.")
+    minimum_rating: str = Field(description="The minimum customer rating required for this loan type ('Poor', 'Fair', 'Good', 'Great', 'Excellent').")
+
+class UserProfileOutput(BaseModel):
+    customer_rating: str = Field(description="The evaluated customer rating: 'Poor', 'Fair', 'Good', 'Great', or 'Excellent'.")
+    customer_name: str = Field(description="Customer name.")
+
+class CheckEquityOutput(BaseModel):
+    has_sufficient_equity: bool = Field(description="True if customer total deposits exceed the required minimum equity, False otherwise.")
+    minimum_required: float = Field(description="The minimum equity threshold checked.")
+
+# Stage 1: Get requested loan value
+get_requested_value_agent = Agent(
+    name="get_requested_value_agent",
+    description="Extracts the loan type and amount requested by the customer.",
+    model=model,
+    instruction=read_prompt("loan-request-prompt.txt"),
+    output_schema=LoanRequestOutput,
+    output_key="loan_request",
+)
+
+# Stage 2: Parallel Agents for Data Gathering
+outstanding_balance_agent = Agent(
+    name="outstanding_balance_agent",
+    description="Retrieves the customer's total existing outstanding loan balance from the database.",
+    model=model,
+    instruction=read_prompt("outstanding-balance-prompt.txt"),
+    tools=[get_total_balance_tool] if get_total_balance_tool else [],
+    output_schema=OutstandingBalanceOutput,
+    output_key="outstanding_balance",
+)
+
+policy_agent = Agent(
+    name="policy_agent",
+    description="Consults bank loan policy in Cloud Storage to determine required debt-to-equity ratio and credit rating.",
+    model=model,
+    instruction=read_prompt("policy-prompt.txt"),
+    tools=[read_loan_policy],
+    output_schema=PolicyOutput,
+    output_key="policy_rules",
+)
+
+user_profile_agent = Agent(
+    name="user_profile_agent",
+    description="Consults customer profile in Cloud Storage to determine customer credit rating.",
+    model=model,
+    instruction=read_prompt("user-profile-base-prompt.txt"),
+    tools=[read_customer_profile],
+    output_schema=UserProfileOutput,
+    output_key="customer_profile",
+)
+
+loan_info_gathering_agent = ParallelAgent(
+    name="loan_info_gathering_agent",
+    description="Gathers loan debt, policy criteria, and customer credit rating in parallel.",
+    sub_agents=[outstanding_balance_agent, policy_agent, user_profile_agent],
+)
+
+# Stage 3: TotalValueAgent (Custom Agent for Arithmetic Math)
+class TotalValueAgent(BaseAgent):
+    def __init__(self, name: str = "total_value_agent"):
+        super().__init__(name=name)
+
+    async def _run_async_impl(self, ctx: InvocationContext) -> AsyncGenerator[Event, None]:
+        state = ctx.session.state
+
+        # 1. Get requested loan amount
+        loan_req = state.get("loan_request", {})
+        if isinstance(loan_req, BaseModel):
+            loan_req = loan_req.model_dump()
+        requested_amount = float(loan_req.get("amount", 0.0))
+
+        # 2. Get current outstanding balance
+        out_bal = state.get("outstanding_balance", {})
+        if isinstance(out_bal, BaseModel):
+            out_bal = out_bal.model_dump()
+        outstanding_balance = float(out_bal.get("outstanding_balance", 0.0))
+
+        # 3. Get debt-to-equity ratio from policy_rules
+        policy = state.get("policy_rules", {})
+        if isinstance(policy, BaseModel):
+            policy = policy.model_dump()
+        ratio = float(policy.get("debt_to_equity_ratio", 1.0))
+        if ratio <= 0:
+            ratio = 1.0
+
+        total_debt = outstanding_balance + requested_amount
+        minimum_required_equity = round(total_debt / ratio, 2)
+
+        equity_calc = {
+            "requested_amount": requested_amount,
+            "outstanding_balance": outstanding_balance,
+            "total_debt": total_debt,
+            "debt_to_equity_ratio": ratio,
+            "minimum_required_equity": minimum_required_equity,
+        }
