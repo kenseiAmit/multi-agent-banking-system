@@ -1,0 +1,23 @@
+{
+  "name": "loan",
+  "description": "Loan Account Agent providing existing loan management and automated loan application approval workflows.",
+  "url": "http://localhost:8000/a2a/loan",
+  "defaultInputModes": ["text/plain"],
+  "defaultOutputModes": ["text/plain"],
+  "capabilities": {
+    "streaming": false,
+    "functions": true
+  },
+  "skills": [
+    {
+      "id": "loan_inquiry",
+      "name": "Loan Inquiries and Payments",
+      "description": "Provides information on existing customer loans, balances, payment dates, and terms."
+    },
+    {
+      "id": "loan_approval",
+      "name": "Loan Approval Workflow",
+      "description": "Evaluates and processes new loan applications through policy verification and equity assessment."
+    }
+  ]
+}
