@@ -304,3 +304,45 @@ class TotalValueAgent(BaseAgent):
             "debt_to_equity_ratio": ratio,
             "minimum_required_equity": minimum_required_equity,
         }
+        ctx.session.state["required_equity"] = equity_calc
+
+        yield Event(
+            author=self.name,
+            content=Content(
+                parts=[Part.from_text(text=f"Total debt is {total_debt} (current outstanding balance: {outstanding_balance} + requested loan amount: {requested_amount}). Debt-to-equity ratio is {ratio}. The calculated minimum required deposit equity is {minimum_required_equity}. Action required: check_equity_agent MUST call verify_deposit_equity with minimum_balance={minimum_required_equity} unchanged and preserve minimum_required={minimum_required_equity} in equity_check.")]
+            )
+        )
+
+total_value_agent = TotalValueAgent(name="total_value_agent")
+
+# Stage 4: Check Equity Agent
+check_equity_agent = Agent(
+    name="check_equity_agent",
+    description="Checks customer deposit equity against required minimum equity via deposit department.",
+    model=model,
+    instruction=read_prompt("check-equity-prompt.txt"),
+    tools=[verify_deposit_equity],
+    output_schema=CheckEquityOutput,
+    output_key="equity_check",
+)
+
+# Stage 5: Final Decision Agent
+approval_report_agent = Agent(
+    name="approval_report_agent",
+    description="Evaluates all gathered data, checks criteria, and produces final customer approval or rejection response.",
+    model=model,
+    instruction=read_prompt("approval-report-prompt.txt"),
+)
+
+# Sequential Loan Workflow Agent
+loan_workflow_agent = SequentialAgent(
+    name="loan_workflow_agent",
+    description="Complete multi-stage loan evaluation workflow coordinating request parsing, parallel data gathering, equity calculation, and final decision.",
+    sub_agents=[
+        get_requested_value_agent,
+        loan_info_gathering_agent,
+        total_value_agent,
+        check_equity_agent,
+        approval_report_agent,
+    ],
+)
