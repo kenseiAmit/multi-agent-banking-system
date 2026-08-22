@@ -81,3 +81,48 @@ class TestEquityVerification(unittest.TestCase):
                         "parts": [{"text": '{"meets_minimum": false}'}]
                     }
                 ]
+            }
+        }
+        mock_resp.text = '{"meets_minimum": false}'
+        mock_post.return_value = mock_resp
+
+        threshold = 5436.66
+        result = verify_deposit_equity(threshold)
+        self.assertFalse(result, "verify_deposit_equity must return False for meets_minimum: false")
+
+        # Confirm state schema preserves has_sufficient_equity=False and threshold=5436.66
+        output = CheckEquityOutput(has_sufficient_equity=result, minimum_required=threshold)
+        self.assertFalse(output.has_sufficient_equity)
+        self.assertEqual(output.minimum_required, 5436.66)
+
+    @patch("requests.post")
+    def test_verify_deposit_equity_sufficient(self, mock_post):
+        """Verify that verify_deposit_equity returns True when deposit agent returns meets_minimum: true."""
+        mock_resp = MagicMock()
+        mock_resp.status_code = 200
+        mock_resp.json.return_value = {
+            "jsonrpc": "2.0",
+            "id": "equity-check-req",
+            "result": {
+                "artifacts": [
+                    {
+                        "parts": [{"text": '{"meets_minimum": true}'}]
+                    }
+                ]
+            }
+        }
+        mock_resp.text = '{"meets_minimum": true}'
+        mock_post.return_value = mock_resp
+
+        threshold = 5436.66
+        result = verify_deposit_equity(threshold)
+        self.assertTrue(result, "verify_deposit_equity must return True for meets_minimum: true")
+
+        # Confirm state schema preserves has_sufficient_equity=True and threshold=5436.66
+        output = CheckEquityOutput(has_sufficient_equity=result, minimum_required=threshold)
+        self.assertTrue(output.has_sufficient_equity)
+        self.assertEqual(output.minimum_required, 5436.66)
+
+
+if __name__ == "__main__":
+    unittest.main()
