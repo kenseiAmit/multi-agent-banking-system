@@ -1,0 +1,18 @@
+{
+  "name": "manager",
+  "description": "Manager Agent coordinating banking services across deposit and loan departments for Example National Bank.",
+  "url": "http://localhost:8000/a2a/manager",
+  "defaultInputModes": ["text/plain"],
+  "defaultOutputModes": ["text/plain"],
+  "capabilities": {
+    "streaming": false,
+    "functions": true
+  },
+  "skills": [
+    {
+      "id": "banking_orchestration",
+      "name": "Banking Service Coordination",
+      "description": "Coordinates customer inquiries across deposit and loan services, provides financial overviews, and answers general banking questions."
+    }
+  ]
+}
