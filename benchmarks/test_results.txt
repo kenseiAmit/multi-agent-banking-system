@@ -1,0 +1,235 @@
+
+========================================
+Thread ID: thread-001
+URL: http://localhost:8000/a2a/manager
+========================================
+
+Prompt:
+ What is my current balance on the vacation account?
+
+Response:
+ Your current balance for the vacation account is $1500.
+
+
+========================================
+Thread ID: thread-002
+URL: http://localhost:8000/a2a/manager
+========================================
+
+Prompt:
+ What is my current balance?
+
+Response:
+ I can help you with that. Which account would you like to check the balance for (e.g., "vacation" or "primary")?
+
+-----
+
+Prompt:
+ My primary account
+
+Response:
+ Your current balance for your primary account is $5230.5.
+
+
+========================================
+Thread ID: thread-003
+URL: http://localhost:8000/a2a/manager
+========================================
+
+Prompt:
+ How much do I have on deposit?
+
+Response:
+ I cannot disclose the total combined balance across all your accounts due to security reasons. However, I can help you check the balance of specific individual deposit accounts, such as your checking, savings, or vacation account. Would you like me to check any of those for you?
+
+
+========================================
+Thread ID: thread-004
+URL: http://localhost:8000/a2a/manager
+========================================
+
+Prompt:
+ What was my most recent payment on my main account?
+
+Response:
+ Your most recent payment on your primary account was for $15.25 for Coffee on September 13, 2025.
+
+
+========================================
+Thread ID: thread-005
+URL: http://localhost:8000/a2a/manager
+========================================
+
+Prompt:
+ How much did I pay the hotel on vacation?
+
+Response:
+ You paid $200 to the hotel on September 11, 2025.
+
+
+========================================
+Thread ID: thread-006
+URL: http://localhost:8000/a2a/manager
+========================================
+
+Prompt:
+ Add $1000 to my vacation account.
+
+Response:
+ I cannot execute transactions or modify account balances through this chat assistant. Please visit a branch or use our online banking services to add funds to your vacation account.
+
+
+========================================
+Thread ID: thread-007
+URL: http://localhost:8000/a2a/manager
+========================================
+
+Prompt:
+ Can I get $100 for bubble gum?
+
+Response:
+ I cannot execute transactions or modify account balances through this chat assistant.
+
+-----
+
+Prompt:
+ In that case, can I get $10000?
+
+Response:
+ I cannot execute transactions or modify account balances through this chat assistant.
+
+
+========================================
+Thread ID: thread-008
+URL: http://localhost:8000/a2a/manager
+========================================
+
+Prompt:
+ I'd like to get a $700 loan
+
+Response:
+ Congratulations, Chris Scott! Your loan application for $700 has been approved. A loan officer will contact you shortly to finalize the paperwork and complete the loan details.
+
+-----
+
+Prompt:
+ I want to buy an off-road 4x4 and my buddy can get a good deal on one.
+
+Response:
+ Congratulations, Chris Scott! Your loan application for $700 for a recreational vehicle has been approved. A loan officer will contact you shortly to finalize the paperwork and complete the loan details.
+
+
+========================================
+Thread ID: thread-009
+URL: http://localhost:8000/a2a/manager
+========================================
+
+Prompt:
+ I'm looking to buy a new house for about $500,000
+
+Response:
+ Thank you for providing the context. It appears that Example National Bank does not offer mortgage loans for home purchases. Therefore, we are unable to assist with a loan for your new house.
+
+
+========================================
+Thread ID: thread-010
+URL: http://localhost:8000/a2a/manager
+========================================
+
+Prompt:
+ Hey, I think I can get a good deal on a car for $10,000. Can I borrow that much?
+
+Response:
+ Thank you for your loan application. After a careful review, we are unfortunately unable to approve your loan request at this time.
+
+We understand this may not be the news you were hoping for. If you have any questions about your accounts or would like to explore other banking services, please don't hesitate to speak with one of our representatives. We're here to help in any way we can.
+
+
+========================================
+Thread ID: thread-011
+URL: http://localhost:8000/a2a/manager
+========================================
+
+Prompt:
+ When is my next auto payment due?
+
+Response:
+ Your next auto payment is due on October 1, 2025, and the amount will be $471.78.
+
+
+========================================
+Thread ID: thread-012
+URL: http://localhost:8000/a2a/manager
+========================================
+
+Prompt:
+ How much do I still owe on my personal loan?
+
+Response:
+ You still owe $10,159.25 on your personal loan.
+
+
+========================================
+Thread ID: thread-013
+URL: http://localhost:8000/a2a/manager
+========================================
+
+Prompt:
+ Do I have any outstanding loans?
+
+Response:
+ You currently have two outstanding loans:
+
+*   **Auto Loan:**
+    *   Original Amount: $25,000
+    *   Outstanding Balance: $12,024.04
+    *   Monthly Payment: $471.78
+    *   Next Payment Due: October 1, 2025
+*   **Personal Loan:**
+    *   Original Amount: $15,000
+    *   Outstanding Balance: $10,159.25
+    *   Monthly Payment: $359.19
+    *   Next Payment Due: October 15, 2025
+
+
+========================================
+Thread ID: thread-014
+URL: http://localhost:8000/a2a/manager
+========================================
+
+Prompt:
+ Give me a summary of my financial situation.
+
+Response:
+ Here is a summary of your current loan situation:
+
+You have an auto loan with an original amount of $25,000.00, a monthly payment of $471.78, and an outstanding balance of $12,024.04. Your next payment is due on October 1, 2025.
+
+You also have a personal loan with an original amount of $15,000.00, a monthly payment of $359.19, and an outstanding balance of $10,159.25. Your next payment is due on October 15, 2025.
+
+
+========================================
+Thread ID: thread-015
+URL: http://localhost:8000/a2a/manager
+========================================
+
+Prompt:
+ What is the total balance across all my accounts and what loans do I have?
+
+Response:
+ I can only provide information about your loan accounts. I cannot give you a total balance across all your accounts due to security reasons.
+
+Here is a list of your current loans:
+* Auto Loan:
+    * Original Amount: $25,000
+    * Outstanding Balance: $12,024.04
+    * Monthly Payment: $471.78
+    * Next Payment Date: 2025-10-01
+    * Terms: 60 months
+* Personal Loan:
+    * Original Amount: $15,000
+    * Outstanding Balance: $10,159.25
+    * Monthly Payment: $359.19
+    * Next Payment Date: 2025-10-15
+    * Terms: 48 months
+

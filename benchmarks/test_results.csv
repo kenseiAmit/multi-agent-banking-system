@@ -1,0 +1,49 @@
+msg-001-1,Your current balance for the vacation account is $1500.
+msg-002-1,"I can help you with that. Which account would you like to check the balance for (e.g., ""vacation"" or ""primary"")?"
+msg-002-2,Your current balance for your primary account is $5230.5.
+msg-003-1,"I cannot disclose the total combined balance across all your accounts due to security reasons. However, I can help you check the balance of specific individual deposit accounts, such as your checking, savings, or vacation account. Would you like me to check any of those for you?"
+msg-004-1,"Your most recent payment on your primary account was for $15.25 for Coffee on September 13, 2025."
+msg-005-1,"You paid $200 to the hotel on September 11, 2025."
+msg-006-1,I cannot execute transactions or modify account balances through this chat assistant. Please visit a branch or use our online banking services to add funds to your vacation account.
+msg-007-1,I cannot execute transactions or modify account balances through this chat assistant.
+msg-007-2,I cannot execute transactions or modify account balances through this chat assistant.
+msg-008-1,"Congratulations, Chris Scott! Your loan application for $700 has been approved. A loan officer will contact you shortly to finalize the paperwork and complete the loan details."
+msg-008-2,"Congratulations, Chris Scott! Your loan application for $700 for a recreational vehicle has been approved. A loan officer will contact you shortly to finalize the paperwork and complete the loan details."
+msg-009-1,"Thank you for providing the context. It appears that Example National Bank does not offer mortgage loans for home purchases. Therefore, we are unable to assist with a loan for your new house."
+msg-010-1,"Thank you for your loan application. After a careful review, we are unfortunately unable to approve your loan request at this time.
+
+We understand this may not be the news you were hoping for. If you have any questions about your accounts or would like to explore other banking services, please don't hesitate to speak with one of our representatives. We're here to help in any way we can."
+msg-011-1,"Your next auto payment is due on October 1, 2025, and the amount will be $471.78."
+msg-012-1,"You still owe $10,159.25 on your personal loan."
+msg-013-1,"You currently have two outstanding loans:
+
+*   **Auto Loan:**
+    *   Original Amount: $25,000
+    *   Outstanding Balance: $12,024.04
+    *   Monthly Payment: $471.78
+    *   Next Payment Due: October 1, 2025
+*   **Personal Loan:**
+    *   Original Amount: $15,000
+    *   Outstanding Balance: $10,159.25
+    *   Monthly Payment: $359.19
+    *   Next Payment Due: October 15, 2025"
+msg-014-1,"Here is a summary of your current loan situation:
+
+You have an auto loan with an original amount of $25,000.00, a monthly payment of $471.78, and an outstanding balance of $12,024.04. Your next payment is due on October 1, 2025.
+
+You also have a personal loan with an original amount of $15,000.00, a monthly payment of $359.19, and an outstanding balance of $10,159.25. Your next payment is due on October 15, 2025."
+msg-015-1,"I can only provide information about your loan accounts. I cannot give you a total balance across all your accounts due to security reasons.
+
+Here is a list of your current loans:
+* Auto Loan:
+    * Original Amount: $25,000
+    * Outstanding Balance: $12,024.04
+    * Monthly Payment: $471.78
+    * Next Payment Date: 2025-10-01
+    * Terms: 60 months
+* Personal Loan:
+    * Original Amount: $15,000
+    * Outstanding Balance: $10,159.25
+    * Monthly Payment: $359.19
+    * Next Payment Date: 2025-10-15
+    * Terms: 48 months"
