@@ -1,0 +1,47 @@
+{
+  "session_id": "session-audit-001",
+  "updated_at": "2026-10-11T08:33:41.852036+00:00",
+  "intent": {
+    "intent_type": "summarization",
+    "confidence": 0.96,
+    "reasoning": "User request asks to synthesize or summarize information: 'Please provide an executive summary of what we discussed reg...'"
+  },
+  "next_step": "completed",
+  "context": null,
+  "final_response": {
+    "response": "### Executive Financial Summary\n\nHere is an overview of the key matters addressed during session `session-audit-001`:\n\n- **Loan interest rates and repayment terms**\n- **Total interest computation over the amortization period**\n\n**Key Financial Takeaway:** All inquiries and calculations complied with bank governance and security guidelines. Please consult a certified loan officer if you wish to formally submit a loan application.",
+    "confidence": 0.95,
+    "sources": [
+      "conversation_history",
+      "session_state"
+    ],
+    "intent": "summarization",
+    "session_id": "session-audit-001"
+  },
+  "messages": [
+    {
+      "type": "human",
+      "content": "What are the interest rates for auto and personal loans at Example National Bank?"
+    },
+    {
+      "type": "ai",
+      "content": "Example National Bank offers competitive loan interest rates: Auto Loans start at 4.50% APR, Personal Loans start at 7.25% APR, and Recreational Vehicle (RV) loans start at 6.00% APR. Actual rates vary based on debt-to-equity ratio and credit rating."
+    },
+    {
+      "type": "human",
+      "content": "Calculate the total interest I will pay over 36 months if the monthly interest portion is 45 dollars: 45 * 36"
+    },
+    {
+      "type": "ai",
+      "content": "**Financial Calculation Result:**\n\n- **Mathematical Expression Evaluated:** `45 * 36`\n- **Calculated Value:** **1620**\n\nThe computation was processed via the deterministic calculator tool and logged to the audit log."
+    },
+    {
+      "type": "human",
+      "content": "Please provide an executive summary of what we discussed regarding loan rates and my interest calculation."
+    },
+    {
+      "type": "ai",
+      "content": "### Executive Financial Summary\n\nHere is an overview of the key matters addressed during session `session-audit-001`:\n\n- **Loan interest rates and repayment terms**\n- **Total interest computation over the amortization period**\n\n**Key Financial Takeaway:** All inquiries and calculations complied with bank governance and security guidelines. Please consult a certified loan officer if you wish to formally submit a loan application."
+    }
+  ]
+}
