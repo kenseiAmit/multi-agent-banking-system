@@ -1,0 +1,18 @@
+services:
+  mysql-bank:
+    image: mysql:8.0
+    container_name: banking-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: local_dev_password
+      MYSQL_DATABASE: bank
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./docs/deposit.sql:/docker-entrypoint-initdb.d/01_deposit.sql:ro
+      - ./docs/loan.sql:/docker-entrypoint-initdb.d/02_loan.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-plocal_dev_password"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
