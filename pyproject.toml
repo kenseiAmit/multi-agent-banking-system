@@ -1,0 +1,9 @@
+[project]
+name = "multi-agent-banking-system"
+version = "1.0.0"
+description = "Multi-agent retail banking system with Google ADK A2A microservices, LangGraph routing, and deterministic loan underwriting"
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
