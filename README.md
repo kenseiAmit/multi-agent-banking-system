@@ -1,10 +1,17 @@
-# Multi-Agent Banking System (A2A + LangGraph)
+<div align="center">
+  <img src="assets/hero-banner.svg" alt="Multi-Agent Banking System" width="100%" />
+  <br/><br/>
+  [![CI Suite](https://github.com/kenseiAmit/multi-agent-banking-system/actions/workflows/ci.yml/badge.svg)](https://github.com/kenseiAmit/multi-agent-banking-system/actions/workflows/ci.yml)
+  [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)](https://www.python.org/downloads/)
+  [![Google ADK & A2A](https://img.shields.io/badge/Google%20ADK-A2A%20JSON--RPC-4285F4.svg)]()
+  [![LangGraph](https://img.shields.io/badge/LangGraph-StateGraph-1C3C3C.svg)]()
+  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-[![CI Suite](https://github.com/kenseiAmit/multi-agent-banking-system/actions/workflows/ci.yml/badge.svg)](https://github.com/kenseiAmit/multi-agent-banking-system/actions/workflows/ci.yml)
-[![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)](https://www.python.org/downloads/)
-[![Google ADK & A2A](https://img.shields.io/badge/Google%20ADK-A2A%20JSON--RPC-4285F4.svg)]()
-[![LangGraph](https://img.shields.io/badge/LangGraph-StateGraph-1C3C3C.svg)]()
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+  <br/>
+  <img src="assets/live-demo.svg" alt="Live Execution Trace" width="96%" />
+</div>
+
+---
 
 An enterprise multi-agent retail banking architecture combining **Google Agent Development Kit (ADK)** microservices over the **Agent-to-Agent (A2A)** JSON-RPC protocol, **Model Context Protocol (MCP) Database Toolbox**, **LangGraph stateful intent routing**, and **deterministic loan underwriting math** with zero-knowledge deposit equity verification.
 
