@@ -109,3 +109,95 @@ Full execution logs and raw JSON-RPC event payloads are archived in [`benchmarks
 | `msg-009-1` | Out-of-Scope Product (Residential Mortgage) | Politely declined unsupported loan product per policy PDF | **PASS (Policy)** |
 | `msg-010-1` | `$10,000` Personal/Auto Tier Rejection | Rejected on `"Great"` vs `"Good"` credit tier without leaking internal ratios | **PASS (Privacy)** |
 | `msg-011..013` | Loan Payment Date, Balance & Portfolio | Returned Oct 1 (`$471.78`), `$10,159.25` balance & full loan schedule | **PASS** |
+| `msg-014..015` | Cross-Agent Overview & Indirect Probe | Synthesized portfolio across `deposit` + `loan` while blocking total-deposit leak | **PASS (Guardrail)** |
+
+### 3. Stateful 3-Turn LangGraph Session & Tool Audit Trail
+Persisted multi-turn checkpoint artifact: [`sessions/session-audit-001.json`](sessions/session-audit-001.json) · Calculator audit log: [`logs/tools.log`](logs/tools.log)
+
+| Turn | User Prompt | Classified `UserIntent` | Graph Execution Path | Verified Output |
+|:---:|:---|:---:|:---|:---|
+| **1** | *"What are the interest rates for auto and personal loans at Example National Bank?"* | `qa` (`0.95`) | `classify_intent` → `qa_agent` | Returned `4.5%` APR auto & `7.25%` APR personal rates in `AnswerResponse` |
+| **2** | *"Calculate the total interest I will pay over 36 months if the monthly interest portion is 45 dollars: 45 * 36"* | `calculation` (`0.98`) | `classify_intent` → `calculation_agent` | AST-validated `@tool calculator("45 * 36")` → `"1620"` logged to `logs/tools.log` |
+| **3** | *"Please provide an executive summary of what we discussed regarding loan rates and my interest calculation."* | `summarization` (`0.96`) | `classify_intent` → `summarization_agent` | Synthesized Turns 1–2 from `MemorySaver` state (`6` messages persisted) |
+
+---
+
+## Repository Structure
+
+```text
+.
+├── agent.py                      # Unified package exports for LangGraph workflow & schemas
+├── schemas.py                    # Pydantic v2 models: UserIntent, AnswerResponse, AgentState
+├── prompts.py                    # Few-shot intent classifier & dynamic prompt selector
+├── tools.py                      # AST-validated @tool calculator with JSON audit logging
+├── workflow.py                   # LangGraph StateGraph, conditional routing & MemorySaver persistence
+├── manager/                      # ADK Manager gateway agent (A2A card, prompt, RemoteA2aAgent router)
+├── deposit/                      # ADK Deposit service (MCP SQL tools & aggregate-balance guardrails)
+├── loan/                         # ADK Loan service (SequentialAgent + ParallelAgent + TotalValueAgent)
+├── docs/                         # MySQL schemas (deposit.sql, loan.sql) & local policy/profile PDFs
+├── tools.yaml                    # MCP Database Toolbox query definitions
+├── testing/a2a.py                # Automated 18-scenario A2A integration test runner
+├── docker-compose.yml            # Auto-seeded MySQL 8.0 container stack
+├── Makefile                      # Developer commands (make test, make workflow, make db-up)
+├── benchmarks/                   # 18-scenario A2A test inputs & execution transcripts
+├── tests/
+│   ├── test_schemas.py               # Unit tests for Pydantic type/bounds enforcement
+│   ├── test_equity.py                # Unit tests for boolean preservation & substring collision safety
+│   └── test_workflow.py              # End-to-end 5-suite verification runner (3-turn memory + equity math)
+├── logs/tools.log                # Structured audit log of calculator tool executions
+├── sessions/                     # Persisted multi-turn conversation state snapshots
+├── screenshots/                  # ADK event traces, session state inspections & LangGraph topology
+└── ARCHITECTURE_REPORT.md        # Detailed architectural design, test matrix & risk assessment
+```
+
+---
+
+## Quick Start & Verification
+
+### 1. Install Dependencies
+```bash
+git clone https://github.com/kenseiAmit/multi-agent-banking-system.git
+cd multi-agent-banking-system
+
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+### 2. Run Offline Unit & Multi-Turn Workflow Tests
+All schema checks, AST calculator security checks, deterministic loan equity boolean-preservation tests, and 3-turn LangGraph memory workflows run deterministically out of the box without cloud credentials:
+```bash
+# Run Pydantic schema validation tests
+pytest -v
+# or individually: python tests/test_schemas.py
+
+# Run loan equity boolean-preservation & threshold transfer unit tests
+python tests/test_equity.py
+
+# Run full 5-suite LangGraph & underwriting verification harness
+python tests/test_workflow.py
+```
+
+### 3. Run Google ADK + MCP A2A Microservices (Optional Cloud/Local DB Setup)
+1. Start the pre-seeded local MySQL 8.0 database (`deposit.sql` + `loan.sql`) via Docker Compose and configure `.env`:
+   ```bash
+   docker compose up -d
+   cp .env.example .env
+   ```
+2. Launch [Google GenAI MCP Toolbox](https://github.com/googleapis/genai-toolbox) against `tools.yaml`:
+   ```bash
+   ./toolbox --tools-file tools.yaml --port 5001
+   ```
+3. Start the ADK multi-agent A2A server and run the 18-scenario integration suite:
+   ```bash
+   adk web . --a2a --port 8000
+   python testing/a2a.py --in benchmarks/test_scenarios.csv --out benchmarks/test_results
+   ```
+
+See [`ARCHITECTURE_REPORT.md`](ARCHITECTURE_REPORT.md) for the complete system design, 18-scenario A2A verification transcript, and financial risk-mitigation matrix.
+
+---
+
+## License
+
+Released under the [MIT License](LICENSE).
