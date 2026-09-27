@@ -1,13 +1,13 @@
 <div align="center">
   <img src="assets/hero-banner.svg" alt="Multi-Agent Banking System" width="100%" />
   <br/><br/>
-  [![CI Suite](https://github.com/kenseiAmit/multi-agent-banking-system/actions/workflows/ci.yml/badge.svg)](https://github.com/kenseiAmit/multi-agent-banking-system/actions/workflows/ci.yml)
-  [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)](https://www.python.org/downloads/)
-  [![Google ADK & A2A](https://img.shields.io/badge/Google%20ADK-A2A%20JSON--RPC-4285F4.svg)]()
-  [![LangGraph](https://img.shields.io/badge/LangGraph-StateGraph-1C3C3C.svg)]()
-  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-
-  <br/>
+  <p>
+    <a href="https://github.com/kenseiAmit/multi-agent-banking-system/actions/workflows/ci.yml"><img src="https://github.com/kenseiAmit/multi-agent-banking-system/actions/workflows/ci.yml/badge.svg" alt="CI Suite" /></a>
+    <a href="https://www.python.org/downloads/"><img src="https://img.shields.io/badge/python-3.11%2B-blue.svg" alt="Python 3.11+" /></a>
+    <img src="https://img.shields.io/badge/Google%20ADK-A2A%20JSON--RPC-4285F4.svg" alt="Google ADK &amp; A2A" />
+    <img src="https://img.shields.io/badge/LangGraph-StateGraph-1C3C3C.svg" alt="LangGraph" />
+    <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT" /></a>
+  </p>
   <img src="assets/live-demo.svg" alt="Live Execution Trace" width="96%" />
 </div>
 
