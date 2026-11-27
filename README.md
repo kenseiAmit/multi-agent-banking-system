@@ -13,6 +13,8 @@
 
 ---
 
+![Multi-Agent Retail Banking — A2A, MCP & Zero-Knowledge Blueprint](docs/images/architecture_blueprint.png)
+
 An enterprise multi-agent retail banking architecture combining **Google Agent Development Kit (ADK)** microservices over the **Agent-to-Agent (A2A)** JSON-RPC protocol, **Model Context Protocol (MCP) Database Toolbox**, **LangGraph stateful intent routing**, and **deterministic loan underwriting math** with zero-knowledge deposit equity verification.
 
 ---
